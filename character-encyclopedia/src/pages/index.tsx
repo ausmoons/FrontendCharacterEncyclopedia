@@ -3,37 +3,52 @@ import Head from 'next/head';
 import CharacterList from '../components/pages/CharacterList';
 import { initializeApollo } from '../lib/useApollo';
 import { GET_CHARACTERS } from '../queries/characters';
+import Layout from '../components/UI/Layout';
+import ErrorBoundary from '../components/UI/ErrorBoundary';
+import ErrorMessage from '../components/UI/ErrorMessage';
 
-const Home: NextPage = () => {
+interface HomeProps {
+    error?: string;
+}
+
+const Home: NextPage<HomeProps> = ({ error }) => {
     return (
-        <div>
+        <Layout>
             <Head>
                 <title>Star Wars Character Encyclopedia</title>
                 <meta name="description" content="Explore the Star Wars universe characters" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-
             <main>
-                <CharacterList />
+                <ErrorBoundary fallback={<ErrorMessage message={error || 'Failed to load characters.'} />}>
+                    {error ? (
+                        <ErrorMessage message={error} />
+                    ) : (
+                        <CharacterList />
+                    )}
+                </ErrorBoundary>
             </main>
-
-            <footer className="text-center py-4 mt-8">
-                <p>&copy; 2024 Star Wars Character Encyclopedia</p>
-            </footer>
-        </div>
+        </Layout>
     );
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
     const apolloClient = initializeApollo();
+    let errorMessage = '';
 
-    await apolloClient.query({
-        query: GET_CHARACTERS,
-    });
+    try {
+        await apolloClient.query({
+            query: GET_CHARACTERS,
+        });
+    } catch (error) {
+        console.error('Error fetching characters:', error);
+        errorMessage = 'Error fetching characters. Please try again later.';
+    }
 
     return {
         props: {
             initialApolloState: apolloClient.cache.extract(),
+            error: errorMessage,
         },
     };
 };

@@ -1,16 +1,19 @@
 import { AppProps } from 'next/app';
 import { ApolloProvider } from '@apollo/client';
 import { useApollo } from '../lib/useApollo';
+import ErrorBoundary from '../components/UI/ErrorBoundary';
 import '../styles/globals.css';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
     const apolloClient = useApollo(pageProps.initialApolloState);
 
     return (
-        <ApolloProvider client={apolloClient}>
-            <Component {...pageProps} />
-        </ApolloProvider>
+        <ErrorBoundary>
+            <ApolloProvider client={apolloClient}>
+                <Component {...pageProps} />
+            </ApolloProvider>
+        </ErrorBoundary>
     );
 }
 
-export default MyApp;
+export default App;

@@ -1,48 +1,46 @@
 import { gql } from '@apollo/client';
 
+export const CHARACTER_FIELDS = gql`
+  fragment CharacterFields on Person {
+    id
+    name
+    species {
+      name
+    }
+    homeworld {
+      name
+    }
+    filmConnection {
+      films {
+        title
+      }
+    }
+  }
+`;
+
 export const GET_CHARACTERS = gql`
   query GetAllCharacters {
     allPeople {
       people {
-        id
-        name
+        ...CharacterFields
         eyeColor
         gender
         hairColor
         height
         mass
         skinColor
-        homeworld {
-          name
-        }
-        species {
-          name
-        }
-        filmConnection {
-          films {
-            title
-          }
-        }
       }
     }
   }
+  ${CHARACTER_FIELDS}
 `;
 
 export const GET_CHARACTER_DETAILS = gql`
-query GetCharacters {
-  characters {
-    results {
-      id
-      name
+  query GetCharacterDetails($id: ID!) {
+    person(id: $id) {
+      ...CharacterFields
       birthYear
-      species {
-        name
-        classification
-        designation
-        averageHeight
-        averageLifespan
-      }
     }
   }
-}
+  ${CHARACTER_FIELDS}
 `;
