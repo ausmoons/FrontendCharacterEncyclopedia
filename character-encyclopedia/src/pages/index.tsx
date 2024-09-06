@@ -39,6 +39,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     try {
         await apolloClient.query({
             query: GET_CHARACTERS,
+            variables: { first: 20 },
         });
     } catch (error) {
         console.error('Error fetching characters:', error);

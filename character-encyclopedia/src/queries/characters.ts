@@ -4,31 +4,40 @@ export const CHARACTER_FIELDS = gql`
   fragment CharacterFields on Person {
     id
     name
-    species {
-      name
-    }
+    birthYear
+    eyeColor
+    gender
+    hairColor
+    height
+    mass
+    skinColor
     homeworld {
       name
     }
+    species {
+      name
+    }
     filmConnection {
-      films {
-        title
+      edges {
+        node {
+          title
+        }
       }
     }
   }
 `;
 
 export const GET_CHARACTERS = gql`
-  query GetAllCharacters {
-    allPeople {
-      people {
-        ...CharacterFields
-        eyeColor
-        gender
-        hairColor
-        height
-        mass
-        skinColor
+  query GetAllCharacters($first: Int, $after: String) {
+    allPeople(first: $first, after: $after) {
+      edges {
+        node {
+          ...CharacterFields
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
@@ -39,7 +48,6 @@ export const GET_CHARACTER_DETAILS = gql`
   query GetCharacterDetails($id: ID!) {
     person(id: $id) {
       ...CharacterFields
-      birthYear
     }
   }
   ${CHARACTER_FIELDS}

@@ -20,6 +20,10 @@ const CharacterDetail = () => {
     if (loading) return <LoadingSpinner />;
     if (error) return <ErrorMessage message={error.message} />;
 
+    if (!data || !data.person) {
+        return <ErrorMessage message="No character data found" />;
+    }
+
     const { person } = data;
 
     return (
@@ -33,7 +37,7 @@ const CharacterDetail = () => {
                 <h1 className="text-3xl font-bold text-center text-white mb-4">{person.name}</h1>
 
                 <CharacterInfo person={person} />
-                <FilmsList films={person.filmConnection.films} />
+                <FilmsList films={person.filmConnection?.edges || []} />
 
                 <div className="mt-8 text-center">
                     <button
@@ -48,7 +52,7 @@ const CharacterDetail = () => {
     );
 };
 
-const CharacterInfo = (({ person }: { person: any }) => (
+const CharacterInfo = ({ person }: { person: any }) => (
     <div className="space-y-4">
         <p className="text-lg">
             <span className="font-semibold text-gray-300">Birth Year:</span> {person.birthYear || 'Unknown'}
@@ -60,18 +64,22 @@ const CharacterInfo = (({ person }: { person: any }) => (
             <span className="font-semibold text-gray-300">Homeworld:</span> {person.homeworld?.name || 'Unknown'}
         </p>
     </div>
-));
+);
 
-const FilmsList = (({ films }: { films: any[] }) => (
+const FilmsList = ({ films }: { films: any[] }) => (
     <>
         <h2 className="mt-8 text-xl font-semibold text-white">Films:</h2>
-        <ul className="mt-4 space-y-2 list-disc list-inside">
-            {films.map((film: any, index: number) => (
-                <li key={index} className="text-gray-300">{film.title}</li>
-            ))}
-        </ul>
+        {films.length > 0 ? (
+            <ul className="mt-4 space-y-2 list-disc list-inside">
+                {films.map((edge: any, index: number) => (
+                    <li key={index} className="text-gray-300">{edge.node?.title || 'Unknown Film'}</li>
+                ))}
+            </ul>
+        ) : (
+            <p className="mt-4 text-gray-300">No films found for this character.</p>
+        )}
     </>
-));
+);
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const apolloClient = initializeApollo();
