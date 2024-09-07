@@ -20,17 +20,20 @@ const Home: NextPage<HomeProps> = ({ error }) => {
           name="description"
           content="Explore the Star Wars universe characters"
         />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      {error ? (
+        <ErrorMessage message={error} />
+      ) : (
         <ErrorBoundary
-          fallback={
-            <ErrorMessage message={error || 'Failed to load characters.'} />
-          }
+          fallback={(error) => (
+            <ErrorMessage
+              message={error.message || 'Failed to load characters.'}
+            />
+          )}
         >
-          {error ? <ErrorMessage message={error} /> : <CharacterList />}
+          <CharacterList />
         </ErrorBoundary>
-      </main>
+      )}
     </Layout>
   );
 };
@@ -52,7 +55,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       initialApolloState: apolloClient.cache.extract(),
-      error: errorMessage,
+      error: errorMessage || null,
     },
   };
 };

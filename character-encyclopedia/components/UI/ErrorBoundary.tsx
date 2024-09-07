@@ -1,46 +1,67 @@
-import React, { ReactNode, useState, useEffect } from 'react';
+import React, { ErrorInfo, ReactNode } from 'react';
 import Button from './Button';
 import styles from '@styles/components/ui/ErrorBoundary.module.scss';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
-  fallback?: ReactNode;
+  fallback?: (error: Error, resetError: () => void) => ReactNode;
+  onError?: (error: Error, errorInfo: ErrorInfo) => void;
 }
 
-const ErrorBoundary: React.FC<ErrorBoundaryProps> = ({
-  children,
-  fallback,
-}) => {
-  const [hasError, setHasError] = useState(false);
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
 
-  useEffect(() => {
-    const errorHandler = (error: ErrorEvent) => {
-      console.error('Uncaught error:', error);
-      setHasError(true);
-    };
+class ErrorBoundary extends React.Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
 
-    window.addEventListener('error', errorHandler);
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, error };
+  }
 
-    return () => window.removeEventListener('error', errorHandler);
-  }, []);
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('Uncaught error:', error, errorInfo);
+    this.props.onError?.(error, errorInfo);
+  }
 
-  if (hasError) {
-    return (
-      fallback || (
+  resetError = () => {
+    this.setState({ hasError: false, error: null });
+  };
+
+  render() {
+    if (this.state.hasError) {
+      if (this.props.fallback) {
+        return this.props.fallback(this.state.error!, this.resetError);
+      }
+
+      return (
         <div className={styles.errorContainer} role="alert">
-          <strong className={styles.errorTitle}>Oops! </strong>
-          <span className={styles.errorMessage}>Something went wrong.</span>
+          <h1 className={styles.errorTitle}>Oops! An Error Occurred</h1>
+          <p className={styles.errorMessage}>
+            {this.state.error?.message || 'Something went wrong.'}
+          </p>
+          <p className={styles.errorDetails}>
+            We apologize for the inconvenience. Please try again or contact
+            support if the problem persists.
+          </p>
           <div className={styles.buttonWrapper}>
-            <Button onClick={() => setHasError(false)} variant="danger">
-              Try again
+            <Button onClick={this.resetError} variant="danger">
+              Try Again
             </Button>
           </div>
         </div>
-      )
-    );
-  }
+      );
+    }
 
-  return <>{children}</>;
-};
+    return this.props.children;
+  }
+}
 
 export default ErrorBoundary;

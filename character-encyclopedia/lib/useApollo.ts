@@ -3,9 +3,9 @@ import {
   InMemoryCache,
   NormalizedCacheObject,
   FieldPolicy,
-  Reference,
 } from '@apollo/client';
 import { useMemo } from 'react';
+import { AllPeopleConnection } from '@/types/apollo';
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 
@@ -20,14 +20,14 @@ function createApolloClient() {
             allPeople: {
               keyArgs: false,
               merge(
-                existing: any,
-                incoming: any,
+                existing: AllPeopleConnection | undefined,
+                incoming: AllPeopleConnection,
                 { args }: { args: { after?: string } }
-              ): any {
-                const edges = existing ? existing.edges.slice(0) : [];
+              ): AllPeopleConnection {
+                const edges = existing ? [...existing.edges] : [];
                 if (incoming) {
                   if (args?.after) {
-                    incoming.edges.forEach((edge: Reference) => {
+                    incoming.edges.forEach((edge) => {
                       edges.push(edge);
                     });
                   } else {
@@ -39,7 +39,11 @@ function createApolloClient() {
                   edges,
                 };
               },
-            } as FieldPolicy<any, any, any>,
+            } as FieldPolicy<
+              AllPeopleConnection,
+              AllPeopleConnection,
+              { after?: string }
+            >,
           },
         },
       },

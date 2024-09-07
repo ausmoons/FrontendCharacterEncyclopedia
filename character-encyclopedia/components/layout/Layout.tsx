@@ -15,21 +15,18 @@ const Layout: React.FC<LayoutProps> = ({ children }) => (
     </Head>
 
     <header className={styles.header}>
-      <nav className={styles.nav}>
-        <LinkButton
-          href="/"
-          className={styles.linkButton}
-          variant="text"
-        >
-          Star Wars Character Encyclopedia
-        </LinkButton>
-      </nav>
+      <LinkButton href="/" className={styles.linkButton} variant="text">
+        Star Wars Character Encyclopedia
+      </LinkButton>
     </header>
 
     <main className={styles.main}>{children}</main>
 
     <footer className={styles.footer}>
-      <p className={styles.footerText}>&copy; {new Date().getFullYear()} Star Wars Character Encyclopedia</p>
+      <p className={styles.footerText}>
+        &copy; {new Date().getFullYear()} Star Wars Character Encyclopedia
+        developed by Liva
+      </p>
     </footer>
   </div>
 );

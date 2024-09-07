@@ -1,9 +1,11 @@
-@import '@variables';
-@import '@mixins';
+@import '@styles/variables';
 
 .card {
   @apply bg-gray-800 rounded-lg shadow-md p-4;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  @apply sm:p-6 md:p-8;
+  transition:
+    transform 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
 
   &:hover {
     transform: translateY(-5px);
@@ -12,13 +14,13 @@
 }
 
 .title {
-  @apply text-xl font-bold text-white;
-  margin-bottom: 0.5rem;
+  @apply text-xl font-bold text-white mb-2;
+  @apply sm:text-2xl md:text-3xl;
 }
 
 .description {
-  @apply text-gray-300;
-  display: -webkit-box;
+  @apply text-gray-300 text-sm;
+  @apply sm:text-base;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -26,5 +28,5 @@
 }
 
 .buttonWrapper {
-  @apply mt-4;
+  @apply mt-4 sm:mt-6;
 }

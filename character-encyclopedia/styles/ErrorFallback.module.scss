@@ -1,0 +1,22 @@
+@import '@styles/variables';
+
+.errorContainer {
+  @apply p-6 text-center max-w-2xl mx-auto mt-10 rounded shadow-black;
+  background-color: $danger-color;
+}
+
+.errorTitle {
+  @apply text-2xl font-bold mb-4 text-red-600;
+}
+
+.errorMessage {
+  @apply mb-4 text-black;
+}
+
+.errorDetails {
+  @apply mb-6 text-current;
+}
+
+.buttonWrapper {
+  @apply mt-6;
+}

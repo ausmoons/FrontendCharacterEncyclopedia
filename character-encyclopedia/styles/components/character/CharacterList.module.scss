@@ -1,12 +1,9 @@
-@import '@variables';
-@import '@mixins';
-
 .container {
-  @apply container mx-auto py-8;
+  @apply mx-auto py-8;
 }
 
 .title {
-  @apply text-4xl font-bold mb-6 text-center;
+  @apply text-3xl font-bold mb-6 text-center;
 }
 
 .controlsContainer {
@@ -14,7 +11,7 @@
 }
 
 .characterGrid {
-  @apply grid gap-6 mt-6;
+  @apply grid gap-4 mt-6;
   grid-template-columns: repeat(1, minmax(0, 1fr));
 
   @screen sm {

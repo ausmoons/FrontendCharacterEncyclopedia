@@ -1,22 +1,21 @@
-@import '@variables';
-@import '@mixins';
+@import '@styles/variables';
 
 .errorContainer {
   @apply bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative;
+  @apply sm:px-6 sm:py-4;
 }
 
 .errorTitle {
-  @apply font-bold;
+  @apply font-bold text-lg;
+  @apply sm:text-xl;
 }
 
 .errorMessage {
-  @apply block;
-
-  @screen sm {
-    @apply inline;
-  }
+  @apply block mt-2;
+  @apply sm:inline sm:mt-0 sm:ml-2;
 }
 
 .buttonWrapper {
   @apply mt-4;
+  @apply sm:mt-6;
 }
