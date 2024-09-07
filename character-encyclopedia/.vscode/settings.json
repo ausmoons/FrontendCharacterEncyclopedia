@@ -1,5 +1,10 @@
 {
-    "terminal.integrated.env.osx": {
-        "PATH": "c:\\Users\\livaz\\AppData\\Roaming\\Code\\User\\globalStorage\\biati.ddev-manager\\exposed-commands:${env:PATH}"
-    }
+  "terminal.integrated.env.osx": {
+    "PATH": "c:\\Users\\livaz\\AppData\\Roaming\\Code\\User\\globalStorage\\biati.ddev-manager\\exposed-commands:${env:PATH}"
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }

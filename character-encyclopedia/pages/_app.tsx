@@ -5,15 +5,15 @@ import ErrorBoundary from '../components/UI/ErrorBoundary';
 import '../styles/globals.css';
 
 function App({ Component, pageProps }: AppProps) {
-    const apolloClient = useApollo(pageProps.initialApolloState);
+  const apolloClient = useApollo(pageProps.initialApolloState);
 
-    return (
-        <ErrorBoundary>
-            <ApolloProvider client={apolloClient}>
-                <Component {...pageProps} />
-            </ApolloProvider>
-        </ErrorBoundary>
-    );
+  return (
+    <ErrorBoundary>
+      <ApolloProvider client={apolloClient}>
+        <Component {...pageProps} />
+      </ApolloProvider>
+    </ErrorBoundary>
+  );
 }
 
 export default App;
