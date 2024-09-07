@@ -1,4 +1,6 @@
 import React, { ReactNode, useState, useEffect } from 'react';
+import Button from './Button';
+import styles from '@styles/components/ui/ErrorBoundary.module.scss';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -25,18 +27,14 @@ const ErrorBoundary: React.FC<ErrorBoundaryProps> = ({
   if (hasError) {
     return (
       fallback || (
-        <div
-          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-          role="alert"
-        >
-          <strong className="font-bold">Oops! </strong>
-          <span className="block sm:inline">Something went wrong.</span>
-          <button
-            onClick={() => setHasError(false)}
-            className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Try again
-          </button>
+        <div className={styles.errorContainer} role="alert">
+          <strong className={styles.errorTitle}>Oops! </strong>
+          <span className={styles.errorMessage}>Something went wrong.</span>
+          <div className={styles.buttonWrapper}>
+            <Button onClick={() => setHasError(false)} variant="danger">
+              Try again
+            </Button>
+          </div>
         </div>
       )
     );

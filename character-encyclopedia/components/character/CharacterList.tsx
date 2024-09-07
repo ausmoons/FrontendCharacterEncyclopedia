@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_CHARACTERS } from '../../queries/characters';
-import Link from 'next/link';
-import LoadingSpinner from '../UI/LoadingSpinner';
-import ErrorMessage from '../UI/ErrorMessage';
-import CharacterCard from '../UI/CharacterCard';
-import SearchBar from '../UI/SearchBar';
+import { GET_CHARACTERS } from '@queries/characters';
+import LoadingSpinner from '../ui/LoadingSpinner';
+import ErrorMessage from '../ui/ErrorMessage';
+import CharacterCard from './CharacterCard';
+import SearchBar from '../ui/SearchBar';
+import Button from '../ui/Button';
+import styles from '@styles/components/character/CharacterList.module.scss';
 
 type SortOrder = 'asc' | 'desc';
 
@@ -70,30 +71,24 @@ const CharacterList: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-4xl font-bold mb-6 text-center">All Characters</h1>
-      <div className="flex justify-between items-center mb-6">
+    <div className={styles.container}>
+      <h1 className={styles.title}>All Characters</h1>
+      <div className={styles.controlsContainer}>
         <SearchBar onSearch={handleSearch} />
-        <button
-          onClick={handleSortToggle}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
+        <Button onClick={handleSortToggle}>
           Sort {sortOrder === 'asc' ? '↑' : '↓'}
-        </button>
+        </Button>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+      <div className={styles.characterGrid}>
         {filteredCharacters.map((character: any) => (
           <CharacterCard key={character.id} character={character} />
         ))}
       </div>
       {data.allPeople.pageInfo.hasNextPage && (
-        <div className="text-center mt-8">
-          <button
-            onClick={handleLoadMore}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            {loading ? 'Loading...' : 'Load More'}
-          </button>
+        <div className={styles.loadMoreContainer}>
+          <Button onClick={handleLoadMore} isLoading={loading}>
+            Load More
+          </Button>
         </div>
       )}
     </div>

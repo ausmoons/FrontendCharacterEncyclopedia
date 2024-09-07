@@ -1,0 +1,35 @@
+@import '@variables';
+@import '@mixins';
+
+.container {
+  @apply container mx-auto py-8;
+}
+
+.title {
+  @apply text-4xl font-bold mb-6 text-center;
+}
+
+.controlsContainer {
+  @apply flex justify-between items-center mb-6;
+}
+
+.characterGrid {
+  @apply grid gap-6 mt-6;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+
+  @screen sm {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @screen md {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @screen lg {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.loadMoreContainer {
+  @apply text-center mt-8;
+}

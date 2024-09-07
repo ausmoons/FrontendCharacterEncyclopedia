@@ -1,11 +1,11 @@
 import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
-import CharacterList from '../components/pages/CharacterList';
+import CharacterList from '../components/character/CharacterList';
 import { initializeApollo } from '../lib/useApollo';
 import { GET_CHARACTERS } from '../queries/characters';
-import Layout from '../components/UI/Layout';
-import ErrorBoundary from '../components/UI/ErrorBoundary';
-import ErrorMessage from '../components/UI/ErrorMessage';
+import Layout from '../components/layout/Layout';
+import ErrorBoundary from '../components/ui/ErrorBoundary';
+import ErrorMessage from '../components/ui/ErrorMessage';
 
 interface HomeProps {
   error?: string;

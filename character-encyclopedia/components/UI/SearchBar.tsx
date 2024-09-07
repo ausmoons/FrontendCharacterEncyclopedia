@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { debounce } from 'lodash';
+import styles from '@styles/components/ui/SearchBar.module.scss';
 
 interface SearchBarProps {
   onSearch: (searchTerm: string) => void;
@@ -25,13 +26,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   return (
-    <div className="mb-6">
+    <div className={styles.container}>
       <input
         type="text"
         value={searchTerm}
         onChange={handleInputChange}
         placeholder="Search characters..."
-        className="w-full px-4 py-2 text-gray-900 bg-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+        className={styles.input}
       />
     </div>
   );

@@ -1,0 +1,30 @@
+@import '@variables';
+@import '@mixins';
+
+.container {
+  @apply min-h-screen bg-gray-900 text-white;
+}
+
+.header {
+  @apply bg-gray-800 shadow-md;
+}
+
+.nav {
+  @apply container mx-auto px-6 py-4;
+}
+
+.main {
+  @apply container mx-auto px-6 py-8;
+}
+
+.footer {
+  @apply bg-gray-800 text-center py-4;
+}
+
+.footerText {
+  @apply text-sm;
+}
+
+.linkButton {
+  @apply text-2xl font-bold;
+}

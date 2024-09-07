@@ -1,0 +1,14 @@
+@import '@variables';
+@import '@mixins';
+
+.linkButton {
+  @apply transition duration-300;
+}
+
+.text {
+  @apply text-white hover:text-blue-300;
+}
+
+.button {
+  @apply inline-block bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded;
+}
