@@ -1,17 +1,6 @@
-import React, { ErrorInfo, ReactNode } from 'react';
-import Button from './Button';
-import styles from '@styles/components/ui/ErrorBoundary.module.scss';
-
-interface ErrorBoundaryProps {
-  children: ReactNode;
-  fallback?: (error: Error, resetError: () => void) => ReactNode;
-  onError?: (error: Error, errorInfo: ErrorInfo) => void;
-}
-
-interface ErrorBoundaryState {
-  hasError: boolean;
-  error: Error | null;
-}
+import React, { ErrorInfo } from 'react';
+import { ErrorBoundaryProps, ErrorBoundaryState } from '@/types/ErrorBoundary';
+import DefaultErrorFallback from './DefaultErrorFallback';
 
 class ErrorBoundary extends React.Component<
   ErrorBoundaryProps,
@@ -42,21 +31,10 @@ class ErrorBoundary extends React.Component<
       }
 
       return (
-        <div className={styles.errorContainer} role="alert">
-          <h1 className={styles.errorTitle}>Oops! An Error Occurred</h1>
-          <p className={styles.errorMessage}>
-            {this.state.error?.message || 'Something went wrong.'}
-          </p>
-          <p className={styles.errorDetails}>
-            We apologize for the inconvenience. Please try again or contact
-            support if the problem persists.
-          </p>
-          <div className={styles.buttonWrapper}>
-            <Button onClick={this.resetError} variant="danger">
-              Try Again
-            </Button>
-          </div>
-        </div>
+        <DefaultErrorFallback
+          error={this.state.error!}
+          resetError={this.resetError}
+        />
       );
     }
 
@@ -64,4 +42,4 @@ class ErrorBoundary extends React.Component<
   }
 }
 
-export default ErrorBoundary;
+export default React.memo(ErrorBoundary);

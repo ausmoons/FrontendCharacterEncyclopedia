@@ -1,15 +1,11 @@
 import React from 'react';
+import { ErrorMessageProps } from '@/types/error';
 import styles from '@styles/components/ui/ErrorMessage.module.scss';
 
-interface ErrorMessageProps {
-  message: string;
-}
-
-const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => (
-  <div className={styles.errorContainer} role="alert">
-    <strong className={styles.errorTitle}>Error: </strong>
-    <span className={styles.errorMessage}>{message}</span>
+const ErrorMessage: React.FC<ErrorMessageProps> = ({ type, message }) => (
+  <div className={`${styles.errorContainer} ${styles[type.toLowerCase()]}`}>
+    <p className={styles.errorMessage}>{message}</p>
   </div>
 );
 
-export default ErrorMessage;
+export default React.memo(ErrorMessage);

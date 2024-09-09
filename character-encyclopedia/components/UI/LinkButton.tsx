@@ -24,4 +24,4 @@ const LinkButton: React.FC<LinkButtonProps> = ({
   );
 };
 
-export default LinkButton;
+export default React.memo(LinkButton);

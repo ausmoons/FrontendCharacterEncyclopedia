@@ -1,0 +1,13 @@
+.infoContainer {
+  @apply space-y-4 bg-gray-700 p-4 rounded-md;
+  @apply sm:space-y-5 sm:p-6;
+}
+
+.infoText {
+  @apply text-lg flex justify-between items-center;
+  @apply sm:text-xl;
+}
+
+.infoLabel {
+  @apply font-semibold;
+}

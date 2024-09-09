@@ -8,6 +8,7 @@ export interface Homeworld {
 
 export interface Film {
   node: {
+    id: string;
     title: string | null;
   } | null;
 }
@@ -31,7 +32,7 @@ export interface Character {
   id: string;
   name: string;
   gender: string;
-  species: Species[];
+  species: Species | null;
   birthYear: string;
   eyeColor: string;
   hairColor: string;

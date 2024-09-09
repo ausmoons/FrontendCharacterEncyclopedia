@@ -1,35 +1,33 @@
 import { GetServerSideProps, NextPage } from 'next';
-import Head from 'next/head';
 import CharacterList from '../components/character/CharacterList';
 import { initializeApollo } from '../lib/useApollo';
 import { GET_CHARACTERS } from '../queries/characters';
 import Layout from '../components/layout/Layout';
 import ErrorBoundary from '../components/ui/ErrorBoundary';
 import ErrorMessage from '../components/ui/ErrorMessage';
+import { handleError, logError } from '@utils/errorHandling';
+import { ErrorDetails } from '@/types/error';
 
 interface HomeProps {
-  error?: string;
+  error?: ErrorDetails;
 }
 
 const Home: NextPage<HomeProps> = ({ error }) => {
   return (
     <Layout>
-      <Head>
-        <title>Star Wars Character Encyclopedia</title>
-        <meta
-          name="description"
-          content="Explore the Star Wars universe characters"
-        />
-      </Head>
       {error ? (
-        <ErrorMessage message={error} />
+        <ErrorMessage type={error.type} message={error.message} />
       ) : (
         <ErrorBoundary
-          fallback={(error) => (
-            <ErrorMessage
-              message={error.message || 'Failed to load characters.'}
-            />
-          )}
+          fallback={(error) => {
+            const errorDetails = handleError(error);
+            return (
+              <ErrorMessage
+                type={errorDetails.type}
+                message={errorDetails.message}
+              />
+            );
+          }}
         >
           <CharacterList />
         </ErrorBoundary>
@@ -40,24 +38,29 @@ const Home: NextPage<HomeProps> = ({ error }) => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const apolloClient = initializeApollo();
-  let errorMessage = '';
 
   try {
     await apolloClient.query({
       query: GET_CHARACTERS,
       variables: { first: 20 },
     });
-  } catch (error) {
-    console.error('Error fetching characters:', error);
-    errorMessage = 'Error fetching characters. Please try again later.';
-  }
 
-  return {
-    props: {
-      initialApolloState: apolloClient.cache.extract(),
-      error: errorMessage || null,
-    },
-  };
+    return {
+      props: {
+        initialApolloState: apolloClient.cache.extract(),
+      },
+    };
+  } catch (error) {
+    const errorDetails = handleError(error);
+    logError(errorDetails);
+
+    return {
+      props: {
+        initialApolloState: apolloClient.cache.extract(),
+        error: errorDetails,
+      },
+    };
+  }
 };
 
 export default Home;

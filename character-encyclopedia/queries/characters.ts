@@ -9,7 +9,6 @@ export const CHARACTER_FIELDS = gql`
     gender
     hairColor
     height
-    mass
     skinColor
     homeworld {
       name

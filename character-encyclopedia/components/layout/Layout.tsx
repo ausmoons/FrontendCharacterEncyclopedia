@@ -1,6 +1,5 @@
 // Layout.tsx
 import React from 'react';
-import Head from 'next/head';
 import LinkButton from '@components/ui/LinkButton';
 import { PiStarThin } from 'react-icons/pi';
 import styles from '@styles/components/layout/Layout.module.scss';
@@ -11,10 +10,6 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => (
   <div className={styles.container}>
-    <Head>
-      <title>Star Wars Character Encyclopedia</title>
-    </Head>
-
     <header className={styles.header}>
       <div className={styles.headerContent}>
         <PiStarThin className={styles.headerIcon} />
