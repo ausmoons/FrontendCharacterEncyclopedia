@@ -1,3 +1,4 @@
+// next.config.js
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -9,16 +10,18 @@ const nextConfig = {
   reactStrictMode: true,
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
-    prependData: `@import "variables.scss";`,
   },
   webpack: (config) => {
-    config.resolve.alias['@'] = path.resolve(__dirname);
-    config.resolve.alias['@components'] = path.resolve(__dirname, 'components');
-    config.resolve.alias['@styles'] = path.resolve(__dirname, 'styles');
-    config.resolve.alias['@queries'] = path.resolve(__dirname, 'queries');
-    config.resolve.alias['@lib'] = path.resolve(__dirname, 'lib');
-    config.resolve.alias['@utils'] = path.resolve(__dirname, 'utils');
-    config.resolve.alias['@hooks'] = path.resolve(__dirname, 'hooks');
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.resolve(__dirname),
+      '@components': path.resolve(__dirname, 'components'),
+      '@styles': path.resolve(__dirname, 'styles'),
+      '@queries': path.resolve(__dirname, 'queries'),
+      '@lib': path.resolve(__dirname, 'lib'),
+      '@utils': path.resolve(__dirname, 'utils'),
+      '@hooks': path.resolve(__dirname, 'hooks'),
+    };
     return config;
   },
 };

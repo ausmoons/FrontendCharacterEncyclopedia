@@ -1,8 +1,5 @@
-@import '@styles/variables';
-
 .errorContainer {
-  @apply p-6 text-center max-w-2xl mx-auto mt-10 rounded shadow-black;
-  background-color: $danger-color;
+  @apply p-6 text-center max-w-2xl mx-auto mt-10 rounded shadow-lg bg-danger;
 }
 
 .errorTitle {

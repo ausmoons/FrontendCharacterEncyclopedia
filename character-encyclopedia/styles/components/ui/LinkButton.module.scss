@@ -1,13 +1,11 @@
-@import '@styles/variables';
-
 .linkButton {
-  @apply transition duration-300;
-}
-
-.text {
-  @apply text-white hover:text-blue-300;
-}
-
-.button {
-  @apply inline-block bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded;
+  &.button {
+    @apply inline-block w-full sm:w-auto;
+    @apply bg-blue-500 hover:bg-blue-600;
+    @apply font-semibold;
+    @apply rounded text-center;
+    @apply transition duration-300;
+    @apply py-3 px-4 sm:py-2 sm:px-3;
+    @apply text-base sm:text-sm;
+  }
 }

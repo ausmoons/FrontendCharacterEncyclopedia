@@ -1,7 +1,9 @@
-@import '@styles/variables';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-body {
-  font-family: $font-family-base;
-  color: $text-color;
-  background-color: $bg-color;
+@layer base {
+  body {
+    @apply font-sans text-white bg-bg-primary;
+  }
 }

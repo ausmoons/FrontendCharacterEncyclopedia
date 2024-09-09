@@ -1,32 +1,43 @@
-@import '@styles/variables';
-
 .card {
-  @apply bg-gray-800 rounded-lg shadow-md p-4;
-  @apply sm:p-6 md:p-8;
-  transition:
-    transform 0.3s ease-in-out,
-    box-shadow 0.3s ease-in-out;
+  @apply bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 md:p-8;
+  @apply flex flex-col min-h-full;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 
   &:hover {
-    transform: translateY(-5px);
+    @apply transform -translate-y-1;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   }
 }
 
+.cardContent {
+  @apply flex-1 flex flex-col;
+}
+
 .title {
-  @apply text-xl font-bold text-white mb-2;
-  @apply sm:text-2xl md:text-3xl;
+  @apply font-bold mb-2;
+  font-size: clamp(1.25rem, calc(1.5rem + 0.5vw), 2.5rem);
+  @apply leading-tight;
+  max-height: 3.6em;
+  @apply overflow-hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .description {
-  @apply text-gray-300 text-sm;
-  @apply sm:text-base;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  @apply text-gray-300;
+  font-size: clamp(0.875rem, calc(0.875rem + 0.25vw), 1rem);
+  @apply leading-relaxed;
+  @apply break-words;
 }
 
 .buttonWrapper {
-  @apply mt-4 sm:mt-6;
+  @apply mt-4 sm:mt-6 w-full;
+}
+
+.linkButton {
+  @apply inline-block bg-blue-500 hover:bg-blue-600 font-semibold rounded text-center transition duration-300;
+  @apply w-full py-3 px-4 text-base;
+
+  @apply sm:w-auto sm:py-2 sm:px-3 sm:text-sm;
 }

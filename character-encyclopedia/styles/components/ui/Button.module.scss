@@ -1,32 +1,39 @@
-@import '@styles/variables';
-
 .button {
   @apply font-semibold rounded focus:outline-none focus:ring-4 transition duration-300;
 
   &.primary {
-    @apply bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-300;
+    @apply bg-blue-500 hover:bg-blue-600 focus:ring-blue-300;
   }
 
   &.secondary {
-    @apply bg-gray-500 text-white hover:bg-gray-600 focus:ring-gray-300;
+    @apply bg-gray-500 hover:bg-gray-600 focus:ring-gray-300;
   }
 
   &.danger {
-    @apply bg-red-500 text-white hover:bg-red-600 focus:ring-red-300;
+    @apply bg-red-500 hover:bg-red-600 focus:ring-red-300;
   }
 
   &.small {
-    @apply px-2 py-1 text-xs;
-    @apply sm:px-3 sm:py-1 sm:text-sm;
+    @apply px-3 py-2 text-sm;
+
+    @media (max-width: 639px) {
+      @apply px-4 py-3 text-base;
+    }
   }
 
   &.medium {
-    @apply px-3 py-2 text-sm;
-    @apply sm:px-4 sm:py-2 sm:text-base;
+    @apply px-4 py-2 text-base;
+
+    @media (max-width: 639px) {
+      @apply px-5 py-3 text-lg;
+    }
   }
 
   &.large {
-    @apply px-4 py-2 text-base;
-    @apply sm:px-6 sm:py-3 sm:text-lg;
+    @apply px-6 py-3 text-lg;
+
+    @media (max-width: 639px) {
+      @apply px-7 py-4 text-xl;
+    }
   }
 }

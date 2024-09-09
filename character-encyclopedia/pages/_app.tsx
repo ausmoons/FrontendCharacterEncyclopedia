@@ -3,7 +3,6 @@ import { ApolloProvider } from '@apollo/client';
 import { useApollo } from '@lib/useApollo';
 import ErrorBoundary from '@components/ui/ErrorBoundary';
 import styles from '@styles/ErrorFallback.module.scss';
-import '@styles/globals.css';
 import '@styles/globals.scss';
 
 function App({ Component, pageProps }: AppProps) {

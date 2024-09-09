@@ -1,7 +1,9 @@
-@import '@styles/variables';
-
 .container {
-  @apply mb-6;
+  @apply mb-6 w-full;
+
+  @media (min-width: 640px) {
+    @apply mb-0 w-auto;
+  }
 }
 
 .input {
@@ -11,5 +13,9 @@
 
   &::placeholder {
     @apply text-gray-500;
+  }
+
+  @media (max-width: 639px) {
+    @apply text-lg py-3;
   }
 }

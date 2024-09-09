@@ -1,11 +1,17 @@
-@import '@styles/variables';
-
 .container {
-  @apply min-h-screen bg-gray-900 text-white;
+  @apply min-h-screen bg-gray-900;
 }
 
 .header {
-  @apply bg-gray-800 shadow-md;
+  @apply bg-gray-800 shadow-md py-4;
+}
+
+.headerContent {
+  @apply flex items-center;
+}
+
+.headerIcon {
+  @apply h-8 w-8 m-3.5;
 }
 
 .main {
@@ -21,5 +27,5 @@
 }
 
 .linkButton {
-  @apply text-xl font-bold;
+  @apply text-2xl font-bold;
 }
