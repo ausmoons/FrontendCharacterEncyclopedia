@@ -1,4 +1,3 @@
-// Layout.tsx
 import React from 'react';
 import LinkButton from '@components/ui/LinkButton';
 import { PiStarThin } from 'react-icons/pi';
