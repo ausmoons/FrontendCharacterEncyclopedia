@@ -5,7 +5,7 @@ import {
   FieldPolicy,
 } from '@apollo/client';
 import { useMemo } from 'react';
-import { AllPeopleConnection } from '@/types/apollo';
+import { AllPeopleConnection } from '@/interfaces/apollo';
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 

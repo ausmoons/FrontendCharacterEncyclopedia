@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_CHARACTERS } from '@queries/characters';
 import { filterAndSortCharacters } from '@utils/characterUtils';
+import { SortOrder } from '@/types/order';
+import { Character } from '@/interfaces/character';
 
-export type SortOrder = 'asc' | 'desc';
-
-export const useCharacterList = () => {
+const useCharacterList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
-  const [filteredCharacters, setFilteredCharacters] = useState<any[]>([]);
+  const [filteredCharacters, setFilteredCharacters] = useState<Character[]>([]);
 
   const { data, loading, error, fetchMore } = useQuery(GET_CHARACTERS, {
     variables: { first: 20 },
@@ -66,3 +66,5 @@ export const useCharacterList = () => {
     hasNextPage: data?.allPeople?.pageInfo?.hasNextPage,
   };
 };
+
+export default useCharacterList;

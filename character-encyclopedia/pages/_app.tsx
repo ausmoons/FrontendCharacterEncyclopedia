@@ -4,23 +4,11 @@ import Head from 'next/head';
 import { ApolloProvider } from '@apollo/client';
 import { useApollo } from '@lib/useApollo';
 import ErrorBoundary from '@components/ui/ErrorBoundary';
+import ErrorMessage from '@components/ui/ErrorMessage';
 import { handleError, logError } from '@utils/errorHandling';
+import Layout from '@components/layout/Layout';
 import '@styles/globals.scss';
-
-const ErrorFallback: React.FC<{ error: Error; resetError: () => void }> = ({
-  error,
-  resetError,
-}) => {
-  const errorDetails = handleError(error);
-  return (
-    <div className="error-container">
-      <h1 className="error-title">Oops! Something went wrong</h1>
-      <p className="error-message">{errorDetails.message}</p>
-      <p className="error-details">Error type: {errorDetails.type}</p>
-      <button onClick={resetError}>Try again</button>
-    </div>
-  );
-};
+import { ErrorType } from '@/types/error';
 
 function App({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo(pageProps.initialApolloState);
@@ -33,6 +21,13 @@ function App({ Component, pageProps }: AppProps) {
     []
   );
 
+  const mapErrorToErrorType = (error: Error): ErrorType => {
+    if (error.name === 'NetworkError') return 'NETWORK_ERROR';
+    if (error.name === 'GraphQLError') return 'GRAPHQL_ERROR';
+    if (error.name === 'NotFoundError') return 'NOT_FOUND';
+    return 'UNKNOWN_ERROR';
+  };
+
   return (
     <>
       <Head>
@@ -43,16 +38,21 @@ function App({ Component, pageProps }: AppProps) {
           content="Explore the Star Wars universe characters"
         />
       </Head>
-      <ErrorBoundary
-        onError={handleErrorLogging}
-        fallback={(error, resetError) => (
-          <ErrorFallback error={error} resetError={resetError} />
-        )}
-      >
-        <ApolloProvider client={apolloClient}>
-          <Component {...pageProps} />
-        </ApolloProvider>
-      </ErrorBoundary>
+      <ApolloProvider client={apolloClient}>
+        <Layout>
+          <ErrorBoundary
+            onError={handleErrorLogging}
+            fallback={(error) => (
+              <ErrorMessage
+                type={mapErrorToErrorType(error)}
+                message={error.message}
+              />
+            )}
+          >
+            <Component {...pageProps} />
+          </ErrorBoundary>
+        </Layout>
+      </ApolloProvider>
     </>
   );
 }

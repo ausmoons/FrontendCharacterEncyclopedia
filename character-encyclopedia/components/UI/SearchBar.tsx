@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { debounce } from 'lodash';
 import styles from '@styles/components/ui/SearchBar.module.scss';
-
-interface SearchBarProps {
-  onSearch: (searchTerm: string) => void;
-  initialSearch?: string;
-}
+import { SearchBarProps } from '@/interfaces/search';
 
 const SearchBar: React.FC<SearchBarProps> = ({
   onSearch,

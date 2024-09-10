@@ -2,10 +2,7 @@ import React from 'react';
 import LinkButton from '@components/ui/LinkButton';
 import { PiStarThin } from 'react-icons/pi';
 import styles from '@styles/components/layout/Layout.module.scss';
-
-interface LayoutProps {
-  children: React.ReactNode;
-}
+import { LayoutProps } from '@/interfaces/layout';
 
 const Layout: React.FC<LayoutProps> = ({ children }) => (
   <div className={styles.container}>

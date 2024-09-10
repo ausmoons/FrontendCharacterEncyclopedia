@@ -1,11 +1,6 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import React from 'react';
 import styles from '@styles/components/ui/Button.module.scss';
-
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'danger';
-  size?: 'small' | 'medium' | 'large';
-  isLoading?: boolean;
-}
+import { ButtonProps } from '@/interfaces/button';
 
 const Button: React.FC<ButtonProps> = ({
   children,

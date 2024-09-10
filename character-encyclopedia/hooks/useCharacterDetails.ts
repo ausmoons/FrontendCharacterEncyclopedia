@@ -1,9 +1,9 @@
 import { useQuery } from '@apollo/client';
 import { GET_CHARACTER_DETAILS } from '@queries/characters';
-import { CharacterDetailsData } from '@/types/character';
+import { CharacterInfoProps } from '@/interfaces/character';
 
 export const useCharacterDetails = (id: string | string[] | undefined) => {
-  const { loading, error, data } = useQuery<CharacterDetailsData>(
+  const { loading, error, data } = useQuery<CharacterInfoProps>(
     GET_CHARACTER_DETAILS,
     {
       variables: { id },

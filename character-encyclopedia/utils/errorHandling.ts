@@ -1,5 +1,5 @@
 import { ApolloError } from '@apollo/client';
-import { ErrorDetails } from '@/types/error';
+import { ErrorDetails } from '@/interfaces/error';
 
 export const handleError = (error: unknown): ErrorDetails => {
   console.error('Error occurred:', error);

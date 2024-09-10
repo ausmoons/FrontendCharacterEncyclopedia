@@ -2,38 +2,20 @@ import { GetServerSideProps, NextPage } from 'next';
 import CharacterList from '../components/character/CharacterList';
 import { initializeApollo } from '../lib/useApollo';
 import { GET_CHARACTERS } from '../queries/characters';
-import Layout from '../components/layout/Layout';
-import ErrorBoundary from '../components/ui/ErrorBoundary';
 import ErrorMessage from '../components/ui/ErrorMessage';
 import { handleError, logError } from '@utils/errorHandling';
-import { ErrorDetails } from '@/types/error';
+import { ErrorDetails } from '@/interfaces/error';
 
 interface HomeProps {
   error?: ErrorDetails;
 }
 
 const Home: NextPage<HomeProps> = ({ error }) => {
-  return (
-    <Layout>
-      {error ? (
-        <ErrorMessage type={error.type} message={error.message} />
-      ) : (
-        <ErrorBoundary
-          fallback={(error) => {
-            const errorDetails = handleError(error);
-            return (
-              <ErrorMessage
-                type={errorDetails.type}
-                message={errorDetails.message}
-              />
-            );
-          }}
-        >
-          <CharacterList />
-        </ErrorBoundary>
-      )}
-    </Layout>
-  );
+  if (error) {
+    return <ErrorMessage type={error.type} message={error.message} />;
+  }
+
+  return <CharacterList />;
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {

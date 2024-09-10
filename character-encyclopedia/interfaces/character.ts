@@ -1,16 +1,11 @@
+import { Film } from '@/interfaces/film';
+
 export interface Species {
   name: string;
 }
 
 export interface Homeworld {
   name: string | null;
-}
-
-export interface Film {
-  node: {
-    id: string;
-    title: string | null;
-  } | null;
 }
 
 export interface Person {
@@ -22,10 +17,6 @@ export interface Person {
   filmConnection: {
     edges: Film[] | null;
   } | null;
-}
-
-export interface CharacterDetailsData {
-  person: Person | null;
 }
 
 export interface Character {
@@ -41,4 +32,8 @@ export interface Character {
 
 export interface CharacterCardProps {
   character: Character;
+}
+
+export interface CharacterInfoProps {
+  person: Person;
 }

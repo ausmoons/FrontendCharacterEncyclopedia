@@ -1,11 +1,7 @@
 import React from 'react';
 import Button from './Button';
 import styles from '@styles/components/ui/Error.module.scss';
-
-interface DefaultErrorFallbackProps {
-  error: Error;
-  resetError: () => void;
-}
+import { DefaultErrorFallbackProps } from '@/interfaces/error';
 
 const DefaultErrorFallback: React.FC<DefaultErrorFallbackProps> = ({
   error,

@@ -4,9 +4,9 @@ import ErrorMessage from '@components/ui/ErrorMessage';
 import CharacterCard from '@components/character/CharacterCard';
 import SearchBar from '@components/ui/SearchBar';
 import Button from '@components/ui/Button';
-import { useCharacterList } from '@hooks/useCharacterList';
+import useCharacterList from '@hooks/useCharacterList';
 import styles from '@styles/components/character/CharacterList.module.scss';
-import { Character } from '@/types/character';
+import { Character } from '@/interfaces/character';
 import { handleError, logError } from '@utils/errorHandling';
 
 const CharacterList: React.FC = () => {

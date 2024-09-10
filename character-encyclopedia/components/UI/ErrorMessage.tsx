@@ -1,5 +1,5 @@
 import React from 'react';
-import { ErrorMessageProps } from '@/types/error';
+import { ErrorMessageProps } from '@/interfaces/error';
 import styles from '@styles/components/ui/ErrorMessage.module.scss';
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({ type, message }) => (

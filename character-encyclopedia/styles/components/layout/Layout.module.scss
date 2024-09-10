@@ -7,11 +7,19 @@
 }
 
 .headerContent {
-  @apply flex items-center;
+  @apply flex items-center justify-center;
+
+  @media (min-width: 640px) {
+    @apply justify-start ml-4;
+  }
 }
 
 .headerIcon {
-  @apply h-8 w-8 m-3.5;
+  @apply h-6 w-6 mr-2;
+
+  @media (min-width: 640px) {
+    @apply h-8 w-8 mr-3.5;
+  }
 }
 
 .main {
@@ -23,9 +31,17 @@
 }
 
 .footerText {
-  @apply text-sm;
+  @apply text-xs;
+
+  @media (min-width: 640px) {
+    @apply text-sm;
+  }
 }
 
 .linkButton {
-  @apply text-2xl font-bold;
+  @apply text-xl font-bold;
+
+  @media (min-width: 640px) {
+    @apply text-2xl;
+  }
 }

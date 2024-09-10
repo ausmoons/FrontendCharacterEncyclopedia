@@ -1,11 +1,7 @@
 import React from 'react';
-import { Film } from '@/types/character';
+import { FilmsListProps } from '@/interfaces/film';
 import { GiFilmSpool } from 'react-icons/gi';
 import styles from '@styles/components/FilmList.module.scss';
-
-interface FilmsListProps {
-  films: Film[];
-}
 
 export const FilmsList: React.FC<FilmsListProps> = React.memo(({ films }) => (
   <div className={styles.filmsList}>

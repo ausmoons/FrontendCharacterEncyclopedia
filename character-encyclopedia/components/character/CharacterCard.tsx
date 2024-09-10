@@ -1,7 +1,7 @@
 import React from 'react';
 import LinkButton from '@components/ui/LinkButton';
 import styles from '@styles/components/character/CharacterCard.module.scss';
-import { CharacterCardProps } from '@/types/character';
+import { CharacterCardProps } from '@/interfaces/character';
 
 const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
   const description =

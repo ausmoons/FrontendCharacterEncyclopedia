@@ -1,4 +1,4 @@
-import { SortOrder } from '@hooks/useCharacterList';
+import { SortOrder } from '@/types/order';
 
 export const filterAndSortCharacters = (
   characters: any[],
