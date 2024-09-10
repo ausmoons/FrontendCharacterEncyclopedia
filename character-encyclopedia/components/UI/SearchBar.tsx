@@ -29,6 +29,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         onChange={handleInputChange}
         placeholder="Search characters..."
         className={styles.input}
+        data-testid="search-input"
       />
     </div>
   );

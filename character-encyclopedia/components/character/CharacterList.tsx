@@ -41,23 +41,36 @@ const CharacterList: React.FC = () => {
     const errorDetails = handleError(error);
     logError(errorDetails);
     return (
-      <ErrorMessage type={errorDetails.type} message={errorDetails.message} />
+      <ErrorMessage
+        type={errorDetails.type}
+        message={errorDetails.message}
+      />
     );
   }
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>All Characters</h1>
+    <div className={styles.container} data-testid="character-list-container">
+      <h1 className={styles.title} data-testid="character-list-title">All Characters</h1>
       <div className={styles.controlsContainer}>
-        <SearchBar onSearch={handleSearchCallback} initialSearch={searchTerm} />
-        <Button onClick={handleSortToggle}>
+        <SearchBar
+          onSearch={handleSearchCallback}
+          initialSearch={searchTerm}
+          data-testid="search-bar"
+        />
+        <Button onClick={handleSortToggle} data-testid="sort-button">
           Sort {sortOrder === 'asc' ? '↑' : '↓'}
         </Button>
       </div>
-      <div className={styles.characterGrid}>{characterCards}</div>
+      <div className={styles.characterGrid} data-testid="character-grid">
+        {characterCards}
+      </div>
       {hasNextPage && (
         <div className={styles.loadMoreContainer}>
-          <Button onClick={handleLoadMore} isLoading={loading}>
+          <Button
+            onClick={handleLoadMore}
+            isLoading={loading}
+            data-testid="load-more-button"
+          >
             Load More
           </Button>
         </div>

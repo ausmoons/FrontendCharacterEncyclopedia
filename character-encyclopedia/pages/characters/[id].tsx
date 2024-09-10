@@ -14,59 +14,58 @@ import CharacterInfo from '@components/character/CharacterInfo';
 import { FilmsList } from '@components/FilmsList';
 import { handleError } from '@utils/errorHandling';
 
-const CharacterDetail: React.FC = () => {
+const CharacterDetail: React.FC<{ error?: any; notFound?: boolean }> = ({ error, notFound }) => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { loading, error, person } = useCharacterDetails(id);
+  const { loading, person } = useCharacterDetails(id);
 
   const handleBackClick = useCallback(() => {
     router.push('/');
   }, [router]);
 
-  const pageTitle = useMemo(
-    () => `${person?.name || 'Character'} - Star Wars Character Details`,
-    [person]
-  );
-
-  const pageDescription = useMemo(
-    () => `Details about ${person?.name || 'the character'}`,
-    [person]
-  );
-
-  if (loading) return <LoadingSpinner />;
+  if (loading) return <LoadingSpinner data-testid="loading-spinner" />;
 
   if (error) {
-    const errorDetails = handleError(error);
     return (
-      <ErrorMessage type={errorDetails.type} message={errorDetails.message} />
+      <ErrorMessage
+        type={error.type}
+        message={error.message}
+      />
     );
   }
 
-  if (!person) {
-    return <ErrorMessage type="NOT_FOUND" message="No character data found" />;
+  if (notFound) {
+    return (
+      <ErrorMessage
+        type="NOT_FOUND"
+        message="No character data found"
+        data-testid="not-found-message"
+      />
+    );
   }
 
   return (
-    <>
+    <div data-testid="character-detail-page">
       <Head>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
+        <title>{person?.name || 'Character'} - Star Wars Character Details</title>
+        <meta name="description" content={`Details about ${person?.name || 'the character'}`} />
       </Head>
 
       <div className={styles.container}>
-        <h1 className={styles.title}>{person.name}</h1>
+        <h1 className={styles.title} data-testid="character-name">{person.name}</h1>
 
-        <CharacterInfo person={person} />
-        <FilmsList films={person.filmConnection?.edges || []} />
+        {person && <CharacterInfo person={person} data-testid="character-info" />}
+
+        <FilmsList films={person?.filmConnection?.edges || []} />
 
         <div className={styles.buttonContainer}>
-          <Button onClick={handleBackClick} size="large">
+          <Button onClick={handleBackClick} size="large" data-testid="back-button">
             Back to Characters
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
@@ -74,20 +73,42 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const apolloClient = initializeApollo();
   const { id } = context.params as { id: string };
 
+  if (!id) {
+    return {
+      props: {
+        notFound: true,
+      },
+    };
+  }
+
   try {
-    await apolloClient.query<CharacterInfoProps>({
+    const { data } = await apolloClient.query<CharacterInfoProps>({
       query: GET_CHARACTER_DETAILS,
       variables: { id },
     });
+
+    if (!data.person) {
+      console.log('No character found for ID:', id);
+      return {
+        props: {
+          notFound: true,
+        },
+      };
+    }
+
+    return {
+      props: {
+        initialApolloState: apolloClient.cache.extract(),
+      },
+    };
   } catch (error) {
     console.error('Error fetching character details:', error);
+    return {
+      props: {
+        error: handleError(error),
+      },
+    };
   }
-
-  return {
-    props: {
-      initialApolloState: apolloClient.cache.extract(),
-    },
-  };
 };
 
 export default CharacterDetail;

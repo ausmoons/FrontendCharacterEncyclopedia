@@ -4,7 +4,7 @@ import { GiFilmSpool } from 'react-icons/gi';
 import styles from '@styles/components/FilmList.module.scss';
 
 export const FilmsList: React.FC<FilmsListProps> = React.memo(({ films }) => (
-  <div className={styles.filmsList}>
+  <div className={styles.filmsList} data-testid="films-list">
     <h2 className={styles.filmsTitle}>Films</h2>
     {films.length > 0 ? (
       <ul className={styles.filmItem}>

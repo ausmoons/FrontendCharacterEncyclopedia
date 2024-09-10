@@ -35,5 +35,5 @@ export interface CharacterCardProps {
 }
 
 export interface CharacterInfoProps {
-  person: Person;
+  person?: Person;
 }

@@ -11,18 +11,25 @@ interface HomeProps {
 }
 
 const Home: NextPage<HomeProps> = ({ error }) => {
-  if (error) {
-    return <ErrorMessage type={error.type} message={error.message} />;
-  }
-
-  return <CharacterList />;
+  return (
+    <div data-testid="home-page">
+      {error ? (
+        <ErrorMessage
+          type={error.type}
+          message={error.message}
+        />
+      ) : (
+        <CharacterList />
+      )}
+    </div>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const apolloClient = initializeApollo();
 
   try {
-    await apolloClient.query({
+    const { data } = await apolloClient.query({
       query: GET_CHARACTERS,
       variables: { first: 20 },
     });
@@ -30,6 +37,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     return {
       props: {
         initialApolloState: apolloClient.cache.extract(),
+        characters: data.allPeople.edges.map((edge: any) => edge.node),
       },
     };
   } catch (error) {

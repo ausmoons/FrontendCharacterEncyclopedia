@@ -14,6 +14,14 @@ export const handleError = (error: unknown): ErrorDetails => {
       };
     }
     if (error.graphQLErrors.length > 0) {
+      const errorMessage = error.graphQLErrors[0].message;
+      if (errorMessage.includes('No valid ID extracted')) {
+        return {
+          type: 'NOT_FOUND',
+          message: 'No character found with the provided ID.',
+          technical: errorMessage,
+        };
+      }
       return {
         type: 'GRAPHQL_ERROR',
         message: 'There was a problem processing your request.',
