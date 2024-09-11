@@ -10,7 +10,7 @@ export interface Homeworld {
 
 export interface Person {
   id: string;
-  name: string | null;
+  name: string;
   birthYear: string | null;
   species: Species | null;
   homeworld: Homeworld | null;
@@ -35,5 +35,5 @@ export interface CharacterCardProps {
 }
 
 export interface CharacterInfoProps {
-  person?: Person;
+  person: Person;
 }

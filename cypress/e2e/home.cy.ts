@@ -5,11 +5,11 @@ describe('Home Page', () => {
 
   it('loads and displays the character list', () => {
     cy.visit('/');
-    cy.getByData('home-page').should('be.visible');
-    cy.getByData('character-list-container').should('be.visible');
-    cy.getByData('search-input').should('be.visible');
-    cy.getByData('sort-button').should('be.visible');
-    cy.getByData('load-more-button').should('be.visible');
+    cy.get(`[data-testid=home-page]`).should('be.visible');
+    cy.get(`[data-testid=character-list-container]`).should('be.visible');
+    cy.get('[data-testid=search-input]').should('be.visible');
+    cy.get('[data-testid=sort-button]').should('be.visible');
+    cy.get('[data-testid=load-more-button]').should('be.visible');
   });
 
   it('should filter characters based on search input', () => {
@@ -19,7 +19,9 @@ describe('Home Page', () => {
 
     cy.wait(400);
     cy.get('[data-testid="character-list-container"]').should('have.length', 1);
-    cy.get('[data-testid="character-list-container"]').contains('Anakin Skywalker');
+    cy.get('[data-testid="character-list-container"]').contains(
+      'Anakin Skywalker'
+    );
   });
 
   it('should show no results for non-matching search term', () => {

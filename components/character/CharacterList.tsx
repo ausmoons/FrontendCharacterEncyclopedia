@@ -41,16 +41,15 @@ const CharacterList: React.FC = () => {
     const errorDetails = handleError(error);
     logError(errorDetails);
     return (
-      <ErrorMessage
-        type={errorDetails.type}
-        message={errorDetails.message}
-      />
+      <ErrorMessage type={errorDetails.type} message={errorDetails.message} />
     );
   }
 
   return (
     <div className={styles.container} data-testid="character-list-container">
-      <h1 className={styles.title} data-testid="character-list-title">All Characters</h1>
+      <h1 className={styles.title} data-testid="character-list-title">
+        All Characters
+      </h1>
       <div className={styles.controlsContainer}>
         <SearchBar
           onSearch={handleSearchCallback}

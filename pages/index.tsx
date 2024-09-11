@@ -5,6 +5,7 @@ import { GET_CHARACTERS } from '../queries/characters';
 import ErrorMessage from '../components/ui/ErrorMessage';
 import { handleError, logError } from '@utils/errorHandling';
 import { ErrorDetails } from '@/interfaces/error';
+import { Edge } from '@/interfaces/apollo';
 
 interface HomeProps {
   error?: ErrorDetails;
@@ -14,10 +15,7 @@ const Home: NextPage<HomeProps> = ({ error }) => {
   return (
     <div data-testid="home-page">
       {error ? (
-        <ErrorMessage
-          type={error.type}
-          message={error.message}
-        />
+        <ErrorMessage type={error.type} message={error.message} />
       ) : (
         <CharacterList />
       )}
@@ -37,7 +35,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     return {
       props: {
         initialApolloState: apolloClient.cache.extract(),
-        characters: data.allPeople.edges.map((edge: any) => edge.node),
+        characters: data.allPeople.edges.map((edge: Edge) => edge.node),
       },
     };
   } catch (error) {

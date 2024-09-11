@@ -4,6 +4,7 @@ import { GET_CHARACTERS } from '@queries/characters';
 import { filterAndSortCharacters } from '@utils/characterUtils';
 import { SortOrder } from '@/types/order';
 import { Character } from '@/interfaces/character';
+import { Edge } from '@/interfaces/apollo';
 
 const useCharacterList = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -17,7 +18,7 @@ const useCharacterList = () => {
 
   useEffect(() => {
     if (data?.allPeople?.edges) {
-      const characters = data.allPeople.edges.map((edge: any) => edge.node);
+      const characters = data.allPeople.edges.map((edge: Edge) => edge.node);
       setFilteredCharacters(
         filterAndSortCharacters(characters, searchTerm, sortOrder)
       );

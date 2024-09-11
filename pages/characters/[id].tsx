@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { GetServerSideProps } from 'next';
 import { initializeApollo } from '@lib/useApollo';
 import { useRouter } from 'next/router';
@@ -13,10 +13,14 @@ import { useCharacterDetails } from '@hooks/useCharacterDetails';
 import CharacterInfo from '@components/character/CharacterInfo';
 import { FilmsList } from '@components/FilmsList';
 import { handleError } from '@utils/errorHandling';
+import { ErrorDetails } from '@/interfaces/error';
 
-const CharacterDetail: React.FC<{ error?: any; notFound?: boolean }> = ({ error, notFound }) => {
+const CharacterDetail: React.FC<{
+  error?: ErrorDetails;
+  notFound?: boolean;
+}> = ({ error, notFound }) => {
   const router = useRouter();
-  const { id } = router.query;
+  const id = typeof router.query.id === 'string' ? router.query.id : null;
 
   const { loading, person } = useCharacterDetails(id);
 
@@ -25,14 +29,10 @@ const CharacterDetail: React.FC<{ error?: any; notFound?: boolean }> = ({ error,
   }, [router]);
 
   if (loading) return <LoadingSpinner data-testid="loading-spinner" />;
+  if (!person) return <div>Character not found</div>;
 
   if (error) {
-    return (
-      <ErrorMessage
-        type={error.type}
-        message={error.message}
-      />
-    );
+    return <ErrorMessage type={error.type} message={error.message} />;
   }
 
   if (notFound) {
@@ -45,22 +45,33 @@ const CharacterDetail: React.FC<{ error?: any; notFound?: boolean }> = ({ error,
     );
   }
 
+  const characterName = person?.name || 'Character';
+  const filmsList = person?.filmConnection?.edges || [];
+
   return (
     <div data-testid="character-detail-page">
       <Head>
-        <title>{person?.name || 'Character'} - Star Wars Character Details</title>
-        <meta name="description" content={`Details about ${person?.name || 'the character'}`} />
+        <title>{characterName} - Star Wars Character Details</title>
+        <meta name="description" content={`Details about ${characterName}`} />
       </Head>
 
       <div className={styles.container}>
-        <h1 className={styles.title} data-testid="character-name">{person.name}</h1>
+        <h1 className={styles.title} data-testid="character-name">
+          {characterName}
+        </h1>
 
-        {person && <CharacterInfo person={person} data-testid="character-info" />}
+        {person && (
+          <CharacterInfo person={person} data-testid="character-info" />
+        )}
 
-        <FilmsList films={person?.filmConnection?.edges || []} />
+        <FilmsList films={filmsList} />
 
         <div className={styles.buttonContainer}>
-          <Button onClick={handleBackClick} size="large" data-testid="back-button">
+          <Button
+            onClick={handleBackClick}
+            size="large"
+            data-testid="back-button"
+          >
             Back to Characters
           </Button>
         </div>
