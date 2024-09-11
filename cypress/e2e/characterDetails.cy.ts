@@ -19,7 +19,7 @@ describe('CharacterDetail Component', () => {
   it('displays error message when there is an error fetching character details', () => {
     cy.visit('/characters/1');
     cy.get('[data-testid="error-message"]').should('be.visible');
-    cy.get('[data-testid="error-message"]').should('contain', 'No character');
+    cy.get('[data-testid="error-message"]').should('contain', 'not found');
   });
 
   it('navigates back to characters list when back button is clicked', () => {

@@ -27,7 +27,7 @@ describe('Home Page', () => {
   it('should show no results for non-matching search term', () => {
     cy.get('[data-testid="search-input"]')
       .type('Non-existent Character')
-      .should('have.value', 'Non-existent');
+      .should('have.value', 'Non-existent Character');
     cy.wait(400);
     cy.get('[data-testid="character-card"]').should('have.length', 0);
   });

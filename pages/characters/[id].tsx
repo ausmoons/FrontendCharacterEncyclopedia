@@ -29,7 +29,14 @@ const CharacterDetail: React.FC<{
   }, [router]);
 
   if (loading) return <LoadingSpinner data-testid="loading-spinner" />;
-  if (!person) return <div>Character not found</div>;
+  if (!person) {
+    return (
+      <ErrorMessage
+        type="NOT_FOUND"
+        message="Character not found"
+      />
+    );
+  }
 
   if (error) {
     return <ErrorMessage type={error.type} message={error.message} />;
@@ -40,7 +47,6 @@ const CharacterDetail: React.FC<{
       <ErrorMessage
         type="NOT_FOUND"
         message="No character data found"
-        data-testid="not-found-message"
       />
     );
   }
@@ -51,7 +57,7 @@ const CharacterDetail: React.FC<{
   return (
     <div data-testid="character-detail-page">
       <Head>
-        <title>{characterName} - Star Wars Character Details</title>
+        <title>{`${characterName} - Star Wars Character Details`}</title>
         <meta name="description" content={`Details about ${characterName}`} />
       </Head>
 
