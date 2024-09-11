@@ -4,7 +4,7 @@
 Character Encyclopedia is a Next.js application that showcases a collection of characters from various fictional universes. The application is built with a modular and maintainable structure, utilizing TypeScript for type safety and GraphQL for querying character data. The project also includes end-to-end testing using Cypress for comprehensive testing coverage.
 
 ### Video Demo
-![Video Demo](charactersVideo.gif)
+![Video Demo](charactersVideoGif.gif)
 
 ## Key Features
 
